@@ -226,12 +226,8 @@
 
 <div class="wheel-wrap">
   <div class="wheel-stage" id="stage">
-    <div class="ring"></div>
     <div class="wheel" id="wheel"></div>
-    <div class="hub">
-      <div class="hub-icon">↻</div>
-      <div class="hub-text">ARRASTRA<br>PARA GIRAR</div>
-    </div>
+    
   </div>
 </div>
 
@@ -312,8 +308,8 @@ semesters.forEach((s, i)=>{
   svg.style.overflow='visible';
 
   const scale = size/2/360 * 360; // just keep R within size/2
-  const rOut = size*0.46;
-  const rIn = size*0.17;
+  const rOut = size*0.49;
+  const rIn = size*0.05;
   const notch = size*0.025;
 
   const [x1,y1] = polar(0,0,rOut,startAngle);
@@ -382,49 +378,7 @@ semesters.forEach((s, i)=>{
 });
 
 /* ---------- DRAG ROTATE ---------- */
-const stage = document.getElementById('stage');
-let rotation = 0;
-let isDragging = false;
-let startAngleDrag = 0;
-let startRotation = 0;
-let rotationDragged = false;
 
-function angleFromCenter(clientX, clientY){
-  const rect = stage.getBoundingClientRect();
-  const cx0 = rect.left + rect.width/2;
-  const cy0 = rect.top + rect.height/2;
-  return Math.atan2(clientY-cy0, clientX-cx0) * 180/Math.PI;
-}
-
-function pointerDown(e){
-  isDragging = true;
-  rotationDragged = false;
-  wheel.classList.add('dragging');
-  const p = e.touches ? e.touches[0] : e;
-  startAngleDrag = angleFromCenter(p.clientX, p.clientY);
-  startRotation = rotation;
-}
-function pointerMove(e){
-  if(!isDragging) return;
-  const p = e.touches ? e.touches[0] : e;
-  const a = angleFromCenter(p.clientX, p.clientY);
-  let delta = a - startAngleDrag;
-  if(Math.abs(delta) > 1.5) rotationDragged = true;
-  rotation = startRotation + delta;
-  wheel.style.transform = `rotate(${rotation}deg)`;
-}
-function pointerUp(){
-  isDragging = false;
-  wheel.classList.remove('dragging');
-  setTimeout(()=>{ rotationDragged = false; }, 50);
-}
-
-stage.addEventListener('mousedown', pointerDown);
-window.addEventListener('mousemove', pointerMove);
-window.addEventListener('mouseup', pointerUp);
-stage.addEventListener('touchstart', pointerDown, {passive:true});
-window.addEventListener('touchmove', pointerMove, {passive:true});
-window.addEventListener('touchend', pointerUp);
 
 /* scroll to zoom (scale stage) */
 let scaleVal = 1;
@@ -441,13 +395,7 @@ const origSetTransform = ()=>{
     c.style.transform = `translate(-50%,-50%) rotate(${-rotation}deg)`;
   });
 };
-function syncUpright(){
-  document.querySelectorAll('.petal-content').forEach(c=>{
-    c.style.transform = `translate(-50%,-50%) rotate(${-rotation}deg)`;
-  });
-  requestAnimationFrame(syncUpright);
-}
-syncUpright();
+
 
 /* top icons */
 document.getElementById('topBtn').addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
