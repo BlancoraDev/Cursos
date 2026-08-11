@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arquitectura de Redes y Protocolos · EST316</title>
+<meta name="description" content="Sílabo — Arquitectura de Redes y Protocolos (EST316) · FINESI UNAP">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+
+<header class="topnav">
+  <div class="wrap topnav-inner">
+    <nav class="crumbs" aria-label="Ruta">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h4l1.5 1.5H14a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
+      <span>gitcs2026</span><span class="sep">/</span>
+      <span>Semestre VI</span><span class="sep">/</span>
+      <span class="here">EST316.html</span>
+    </nav>
+    <a class="back-link" href="../index.html"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 3 4 8l6 5"/></svg> Volver al índice</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <p class="eyebrow"><span class="dot"></span>EST316 · Estudios de especialidad</p>
+    <h1>Arquitectura de Redes y Protocolos</h1>
+    <div class="hero-meta">
+          <span class="badge nivel-básico"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>Básico</span>
+          <span class="badge plain">03 créditos</span>
+          <span class="badge plain">Ciclo VI</span>
+          <span class="badge plain">2026-I</span>
+    </div>
+    <div class="docente-card">
+      <div class="docente-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.5 3.5-7 8-7s8 2.5 8 7"/></svg></div>
+      <div class="docente-info">
+        <b>Alejandro Apaza Tarqui</b>
+        <span>Ing. Estadístico, Sistemas e Informática</span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="quicknav">
+      <a href="#sumilla">Sumilla</a>
+      <a href="#contenido">Contenido</a>
+  </nav>
+
+  <main>
+  <section id="sumilla">
+    <div class="sec-head"><div class="sec-icon" style="--icon-color:var(--teal)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><h2>Sumilla</h2></div>
+    <p>El curso de <b>Arquitectura de Redes y Protocolos</b> pertenece al área de Estudios de Especialidad y tiene naturaleza teórico-práctica.</p>
+    <p>Su propósito es proporcionar al estudiante los fundamentos necesarios para comprender la organización de redes computacionales y los protocolos que sustentan su funcionamiento, analizar la conectividad de redes, comprender tecnologías modernas de transmisión de datos, analizar sistemas de comunicaciones y simular redes de comunicación de datos.</p>
+  </section>
+  <section id="contenido">
+    <div class="sec-head"><div class="sec-icon" style="--icon-color:var(--rose)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M2 13l10 5 10-5M2 18l10 5 10-5"/></svg></div><h2>Unidades didácticas</h2></div>
+    <div class="card">
+      <div class="unit-head">
+        <h3>Unidad I · Fundamentos</h3><span class="unit-tag"></span>
+      </div>
+      <ul class="weeks">
+        <li><b>Bloque</b><span>Arquitectura, tipos de redes, medios y protocolos de comunicación</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="unit-head">
+        <h3>Unidad II · Servicios y seguridad</h3><span class="unit-tag"></span>
+      </div>
+      <ul class="weeks">
+        <li><b>Bloque</b><span>Servicios de red, seguridad y simulación de redes</span></li>
+      </ul>
+    </div>
+  </section>
+  <section id="nota">
+    <div class="note">// esta página se generó con la información del sílabo compartida hasta ahora — pásame el resto (metodología, evaluación, entregables, bibliografía) y la completo.</div>
+  </section>
+
+  </main>
+
+  <footer>
+    <p>gitcs2026 · Semestre VI · <span style="color:var(--gold)">EST316</span> · FINESI — UNAP</p>
+    <p><a href="../index.html">← Todos los cursos</a></p>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('pointermove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX-rect.left)/rect.width*100)+'%');
+    card.style.setProperty('--my', ((e.clientY-rect.top)/rect.height*100)+'%');
+  });
+});
+</script>
+</body>
+</html>
