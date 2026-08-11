@@ -1,218 +1,738 @@
-
-```html
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
-<link rel="stylesheet" type="text/css" href="./lib/style.css">
-<script type="text/javascript" src="./lib/hidebib.js"></script>
-<title>UNAP-EST315</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<meta name="keywords" content="gestión de proyectos TIC, GitHub, Notion, portafolios, ciencia de datos, desarrollo de software, redes, telecomunicaciones, estadística, PMBOK, Scrum, Kanban" />
-<meta name="description" content="Sílabo actualizado del curso de Gestión de Proyectos TICs - Ingeniería Estadística e Informática - UNAP" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semestre VI · gitcs2026</title>
+<meta name="description" content="Índice de cursos — Semestre VI, FINESI UNAP">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg:        #121022;
+    --bg-alt:    #191632;
+    --surface:   #1e1a3a;
+    --surface-hi:#241f45;
+    --border:    #322b56;
+    --border-hi: #423a72;
+    --text:      #ECE9F7;
+    --text-dim:  #A79EC9;
+    --text-faint:#6f6693;
+    --gold:      #E8A33D;
+    --teal:      #3FB6AE;
+    --rose:      #D9707A;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+
+    --radius: 10px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  ::selection{ background:var(--teal); color:#0d1220; }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline:2px solid var(--teal); outline-offset:3px; border-radius:4px; }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; position:relative; }
+
+  /* ============ AURORA (efecto de luz ambiental) ============ */
+  .aurora{
+    position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  }
+  .aurora span{
+    position:absolute; border-radius:50%; filter:blur(90px);
+    opacity:.16; will-change:transform;
+  }
+  .aurora .a1{ width:480px; height:480px; background:var(--teal); top:-160px; left:-120px; animation:drift1 16s ease-in-out infinite alternate; }
+  .aurora .a2{ width:420px; height:420px; background:var(--gold); top:120px; right:-140px; animation:drift2 19s ease-in-out infinite alternate; }
+  .aurora .a3{ width:380px; height:380px; background:var(--rose); bottom:-160px; left:30%; animation:drift3 22s ease-in-out infinite alternate; opacity:.10; }
+  @keyframes drift1{ from{ transform:translate(0,0); } to{ transform:translate(60px,50px); } }
+  @keyframes drift2{ from{ transform:translate(0,0); } to{ transform:translate(-50px,60px); } }
+  @keyframes drift3{ from{ transform:translate(0,0) scale(1); } to{ transform:translate(40px,-30px) scale(1.08); } }
+
+  body > *{ position:relative; z-index:1; }
+
+  /* ============ TOP NAV ============ */
+  .topnav{
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:blur(10px);
+    background:rgba(18,16,34,0.82);
+    border-bottom:1px solid var(--border);
+  }
+  .topnav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px; padding:14px 0;
+  }
+  .crumbs{
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-dim);
+    display:flex; align-items:center; gap:6px;
+    flex-wrap:wrap; min-width:0;
+  }
+  .crumbs .sep{ color:var(--text-faint); }
+  .crumbs .here{ color:var(--gold); }
+  .crumbs svg{ width:14px; height:14px; vertical-align:-2px; color:var(--teal); flex-shrink:0; }
+
+  .search{ position:relative; width:220px; flex-shrink:0; }
+  .search input{
+    width:100%;
+    background:var(--surface);
+    border:1px solid var(--border);
+    color:var(--text);
+    font-family:var(--font-mono);
+    font-size:13px;
+    padding:8px 12px 8px 32px;
+    border-radius:8px;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .search input:focus{ border-color:var(--teal); background:var(--surface-hi); }
+  .search input::placeholder{ color:var(--text-faint); }
+  .search svg{
+    position:absolute; left:10px; top:50%; transform:translateY(-50%);
+    width:14px; height:14px; color:var(--text-faint); pointer-events:none;
+  }
+
+  /* ============ HERO ============ */
+  .hero{ padding:56px 0 40px; border-bottom:1px solid var(--border); }
+  .hero .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.08em;
+    color:var(--teal); text-transform:uppercase; margin:0 0 14px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .hero .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--teal);
+    box-shadow:0 0 0 3px rgba(63,182,174,0.18);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{ box-shadow:0 0 0 3px rgba(63,182,174,0.18);} 50%{ box-shadow:0 0 0 6px rgba(63,182,174,0.06);} }
+  .hero h1{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(32px,6vw,52px); line-height:1.05; margin:0 0 12px;
+    letter-spacing:-.01em;
+  }
+  .hero h1 span{ color:var(--gold); }
+  .hero p{
+    color:var(--text-dim); font-size:16px; line-height:1.6; margin:0 0 26px;
+    max-width:56ch;
+  }
+  .stats{ display:flex; gap:28px; flex-wrap:wrap; }
+  .stat{ display:flex; flex-direction:column; gap:2px; }
+  .stat b{ font-family:var(--font-display); font-size:22px; }
+  .stat span{ font-size:12px; color:var(--text-faint); font-family:var(--font-mono); }
+
+  .graph{ margin-top:30px; width:100%; max-width:420px; height:46px; }
+  .graph path{
+    fill:none; stroke:var(--teal); stroke-width:2;
+    stroke-linecap:round;
+    stroke-dasharray:600; stroke-dashoffset:600;
+    animation:draw 1.4s ease forwards .2s;
+  }
+  .graph circle{ fill:var(--bg); stroke-width:2; opacity:0; animation:pop .4s ease forwards; }
+  .graph .c1{ stroke:var(--teal); animation-delay:.3s; }
+  .graph .c2{ stroke:var(--gold); animation-delay:.75s; }
+  .graph .c3{ stroke:var(--rose); animation-delay:1.15s; }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  @keyframes pop{ from{ opacity:0; transform:scale(.4); } to{ opacity:1; transform:scale(1); } }
+
+  /* ============ TIMELINE ============ */
+  main{ padding:46px 0 30px; }
+  .timeline{ position:relative; }
+  .timeline::before{
+    content:"";
+    position:absolute; left:19px; top:6px; bottom:6px;
+    width:2px;
+    background:linear-gradient(to bottom, var(--teal), var(--border) 12%, var(--border) 88%, var(--border));
+  }
+
+  .node-root{ position:relative; padding-left:56px; margin-bottom:34px; }
+  .node-root .dot{
+    position:absolute; left:11px; top:4px;
+    width:18px; height:18px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .node-root .dot::after{ content:""; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+  .node-root .card{
+    border-color:var(--border-hi);
+    background:linear-gradient(135deg, var(--surface-hi), var(--surface));
+  }
+  .tag-root{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:var(--font-mono); font-size:11px; color:var(--gold);
+    border:1px solid rgba(232,163,61,.35); background:rgba(232,163,61,.08);
+    padding:2px 8px; border-radius:20px; margin-bottom:8px;
+  }
+
+  .course{ position:relative; padding-left:56px; margin-bottom:18px; }
+  .course .dot{
+    position:absolute; left:12px; top:22px;
+    width:16px; height:16px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--teal);
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .course:hover .dot{ transform:scale(1.15); border-color:var(--gold); }
+
+  /* ---- card + spotlight de cursor ---- */
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    overflow:hidden;
+    transition:border-color .18s ease, background .18s ease, transform .18s ease;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:radial-gradient(240px circle at var(--mx,50%) var(--my,0%), rgba(63,182,174,.14), transparent 65%);
+    opacity:0; transition:opacity .3s ease; z-index:0;
+  }
+  .card:hover::before{ opacity:1; }
+  .card > *{ position:relative; z-index:1; }
+  .course:hover .card{ border-color:var(--border-hi); background:var(--surface-hi); transform:translateX(2px); }
+
+  .card-top{ display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap; }
+  .card-head{ display:flex; align-items:center; gap:12px; min-width:0; }
+  .file-icon{
+    flex-shrink:0; width:38px; height:38px; border-radius:9px;
+    background:var(--bg-alt); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--icon-color, var(--teal));
+    box-shadow:0 0 0 0 rgba(0,0,0,0);
+    transition:box-shadow .2s ease;
+  }
+  .course:hover .file-icon{ box-shadow:0 0 0 4px color-mix(in srgb, var(--icon-color, var(--teal)) 14%, transparent); }
+  .file-icon svg{ width:19px; height:19px; }
+
+  .card-title{ min-width:0; }
+  .card-title .code{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    letter-spacing:.04em; display:block; margin-bottom:2px;
+  }
+  .card-title h3{
+    font-family:var(--font-display); font-size:17px; font-weight:600;
+    margin:0; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+
+  .card-actions{ display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .icon-btn{
+    width:30px; height:30px; border-radius:7px;
+    border:1px solid var(--border); background:transparent;
+    color:var(--text-dim); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:border-color .15s, color .15s, background .15s;
+  }
+  .icon-btn:hover{ border-color:var(--teal); color:var(--teal); background:rgba(63,182,174,0.08); }
+  .icon-btn svg{ width:15px; height:15px; }
+  .icon-btn.copied{ border-color:var(--gold); color:var(--gold); }
+
+  /* meta row: nivel, créditos, docente, aula */
+  .meta-row{
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    margin-top:12px;
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:var(--font-mono); font-size:11px;
+    padding:3px 9px; border-radius:20px; border:1px solid;
+    white-space:nowrap;
+  }
+  .badge svg{ width:11px; height:11px; }
+  .badge.nivel-básico{     color:var(--teal); border-color:rgba(63,182,174,.35); background:rgba(63,182,174,.08); }
+  .badge.nivel-intermedio{ color:var(--gold); border-color:rgba(232,163,61,.35); background:rgba(232,163,61,.08); }
+  .badge.nivel-avanzado{   color:var(--rose); border-color:rgba(217,112,122,.35); background:rgba(217,112,122,.08); }
+  .badge.meta-plain{ color:var(--text-dim); border-color:var(--border); background:transparent; }
+
+  .card-desc{
+    color:var(--text-dim); font-size:13.5px; line-height:1.55;
+    margin:12px 0 0; padding-top:12px; border-top:1px dashed var(--border);
+  }
+  .card-people{
+    display:flex; flex-wrap:wrap; gap:14px; margin-top:10px;
+    font-size:12px; color:var(--text-faint); font-family:var(--font-mono);
+  }
+  .card-people span{ display:inline-flex; align-items:center; gap:5px; }
+  .card-people svg{ width:12px; height:12px; color:var(--text-faint); }
+
+  .card.hidden{ display:none; }
+  .empty-state{
+    display:none; text-align:center; padding:50px 20px; color:var(--text-faint);
+    font-family:var(--font-mono); font-size:13px;
+  }
+  .empty-state.show{ display:block; }
+
+  /* ============ FOOTER ============ */
+  footer{
+    border-top:1px solid var(--border); margin-top:40px;
+    padding:24px 0 40px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  footer p{ margin:0; font-size:12.5px; color:var(--text-faint); font-family:var(--font-mono); }
+  footer a{ color:var(--teal); }
+  footer a:hover{ text-decoration:underline; }
+
+  .node-root, .course{ opacity:0; transform:translateY(10px); }
+  .node-root.in, .course.in{ animation:rise .5s cubic-bezier(.2,.7,.3,1) forwards; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+
+  @media (max-width:640px){
+    .topnav-inner{ flex-direction:column; align-items:stretch; }
+    .search{ width:100%; }
+    .stats{ gap:20px; }
+    .card-title h3{ white-space:normal; }
+    .aurora span{ filter:blur(60px); opacity:.12; }
+  }
+  @media (max-width:420px){
+    .wrap{ padding:0 16px; }
+    .card{ padding:15px 14px; }
+    .file-icon{ width:32px; height:32px; }
+    .file-icon svg{ width:16px; height:16px; }
+    .icon-btn{ width:27px; height:27px; }
+    .card-title h3{ font-size:15px; }
+    .badge{ font-size:10px; padding:2px 7px; }
+  }
+</style>
 </head>
+<body>
 
-<body style="background-color: #060913; margin: 0; padding:0;">
-<div style="padding: 25px;">
-<table width="800" border="0" align="center" cellpadding="20" style="background-color: #fff;">
-<tr>
-<td>
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
 
-<table width="100%" align="center" border="0" cellpadding="10">
-<tr>
-<td width="70%" style="vertical-align: top; text-align: left;">
-<p style="font-size: 36px;">Gestión de Proyectos TICs</p>
-<p style="font-size: 16px;">
-Ingeniería Estadística e Informática<br>
-Facultad de Ingeniería Estadística e Informática<br>
-Universidad Nacional del Altiplano - Puno
-</p>
-<p style="font-size: 16px;">
-Código: EST315 | Ciclo: VI | Créditos: 4<br>
-Horas: 3 teóricas, 2 prácticas | Total: 5 horas
-</p>
-<p style="font-size: 16px;">
-Prof. M. Sc. Romel Percy Melgarejo Bolívar
-</p>
-</td>
-<td width="30%" valign="bottom" align="right"></td>
-</tr>
+<header class="topnav">
+  <div class="wrap topnav-inner">
+    <nav class="crumbs" aria-label="Ruta">
+      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2 3h4l1.5 1.5H14a1 1 0 0 1 1 1V12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/></svg>
+      <span>Cursos</span><span class="sep">/</span>
+      <span>finesi</span><span class="sep">/</span>
+      <span>gitcs2026</span><span class="sep">/</span>
+      <span class="here">Semestre VI</span>
+    </nav>
+    <div class="search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="5"/><path d="M11 11l3.5 3.5"/></svg>
+      <input id="searchInput" type="text" placeholder="Buscar curso, código o docente…" autocomplete="off">
+    </div>
+  </div>
+</header>
 
-<tr>
-<td colspan="2">
-<p>
-<a href="#sumilla">Sumilla</a> |
-<a href="#logro">Logro</a> |
-<a href="#contenido">Contenido</a> |
-<a href="#metodologia">Metodología</a> |
-<a href="#evaluacion">Evaluación</a> |
-<a href="#entregables">Entregables</a> |
-<a href="#recursos">Recursos</a> |
-<a href="#bibliografia">Bibliografía</a> |
-<a href="#contacto">Contacto</a>
-</p>
-</td>
-</tr>
-</table>
+<div class="wrap">
 
-<hr/>
+  <section class="hero">
+    <p class="eyebrow"><span class="dot"></span>gitcs2026 · rama main</p>
+    <h1>Semestre <span>VI</span></h1>
+    <p>Índice de sílabos y material del semestre — Facultad de Ingeniería Estadística e Informática, UNAP. Cada nodo representa un curso versionado en este repositorio.</p>
 
-<heading id="sumilla">Sumilla</heading>
-<p style="text-align: justify">
-El curso de Gestión de Proyectos TICs corresponde al área de Estudios de Especialidad y es de naturaleza teórico-práctica. Tiene como propósito desarrollar competencias para formular, planificar, ejecutar, monitorear, controlar y cerrar proyectos tecnológicos vinculados a la Ingeniería Estadística e Informática.
-</p>
+    <div class="stats">
+      <div class="stat"><b id="statCount">6</b><span>cursos</span></div>
+      <div class="stat"><b>VI</b><span>semestre</span></div>
+      <div class="stat"><b>2026-I</b><span>periodo</span></div>
+    </div>
 
-<p style="text-align: justify">
-El curso se orienta a la gestión de portafolios de proyectos desde el inicio hasta el cierre, integrando las principales líneas de desarrollo profesional de la carrera: desarrollo de software, programación, diseño de sistemas, redes y telecomunicaciones, estadística aplicada, ciencia de datos, inteligencia artificial, análisis estadístico y asesorías de tesis relacionadas con el procesamiento de datos.
-</p>
+    <svg class="graph" viewBox="0 0 420 46" aria-hidden="true">
+      <path d="M10 23 H120 M120 23 C150 23 150 8 180 8 H320 M120 23 C150 23 150 38 180 38 H320"/>
+      <circle class="c1" cx="10" cy="23" r="5"/>
+      <circle class="c2" cx="320" cy="8" r="5"/>
+      <circle class="c3" cx="320" cy="38" r="5"/>
+    </svg>
+  </section>
 
-<p style="text-align: justify">
-Para ello, los estudiantes utilizarán herramientas colaborativas como GitHub, GitHub Projects y Notion, aplicando metodologías tradicionales, ágiles e híbridas como PMBOK, Scrum, Kanban, Design Thinking y gestión basada en evidencias. El curso promueve el trabajo en equipo, la trazabilidad, la documentación técnica, la gestión de tareas, la comunicación efectiva y la entrega progresiva de valor mediante proyectos reales.
-</p>
+  <main>
+    <div class="timeline" id="timeline">
 
-<hr/>
+      <!-- README — nodo raíz -->
+      <div class="node-root course" data-search="readme documentación">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--gold)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+              </div>
+              <div class="card-title">
+                <span class="tag-root">
+                  <svg viewBox="0 0 16 16" fill="currentColor" width="10" height="10"><circle cx="8" cy="8" r="7"/></svg>
+                  raíz del repositorio
+                </span>
+                <h3>README.md</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="README.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./README.md" title="Abrir archivo" aria-label="Abrir README.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <p class="card-desc">Presentación general del repositorio: cómo está organizado y en qué orden revisar los cursos del semestre.</p>
+        </div>
+      </div>
 
-<heading id="logro">Logro del curso</heading>
-<p style="text-align: justify">
-Al finalizar el curso, el estudiante gestiona portafolios y proyectos de Tecnologías de Información y Comunicación aplicando metodologías tradicionales, ágiles e híbridas para planificar, ejecutar, monitorear y controlar iniciativas relacionadas con desarrollo de software, redes y telecomunicaciones, estadística, ciencia de datos, inteligencia artificial e investigación aplicada, utilizando herramientas digitales que garanticen trazabilidad, calidad y cumplimiento de objetivos durante todo el ciclo de vida del proyecto.
-</p>
+      <!-- EST209 — Regresión Lineal y No Lineal -->
+      <div class="course" data-search="est209 regresión lineal no lineal vargas valverde confesor milan">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--teal)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M4 20V4M4 20h16"/>
+                  <circle cx="8" cy="15" r="1.3" fill="currentColor" stroke="none"/>
+                  <circle cx="12" cy="10" r="1.3" fill="currentColor" stroke="none"/>
+                  <circle cx="15" cy="13" r="1.3" fill="currentColor" stroke="none"/>
+                  <circle cx="18" cy="7" r="1.3" fill="currentColor" stroke="none"/>
+                  <path d="M6 17 L19 6" stroke-dasharray="2 2"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST209.md</span>
+                <h3>Regresión Lineal y No Lineal</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST209.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST209.md" title="Abrir archivo" aria-label="Abrir EST209.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-intermedio">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Intermedio
+            </span>
+            <span class="badge meta-plain">04 créditos</span>
+            <span class="badge meta-plain">Aula 202</span>
+          </div>
+          <p class="card-desc">Metodologías estadísticas para estimar modelos que expliquen el comportamiento de una variable de interés, usando software estadístico para pronósticos aplicados a investigación.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Vargas Valverde, Confesor Milan
+            </span>
+          </div>
+        </div>
+      </div>
 
-<hr/>
+      <!-- EST210 — Modelos Lineales -->
+      <div class="course" data-search="est210 modelos lineales morillos valderrama santos octavio">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--gold)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST210.md</span>
+                <h3>Modelos Lineales</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST210.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST210.md" title="Abrir archivo" aria-label="Abrir EST210.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-avanzado">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Avanzado
+            </span>
+            <span class="badge meta-plain">05 créditos</span>
+            <span class="badge meta-plain">Aula 205 · Pab. antiguo</span>
+          </div>
+          <p class="card-desc">Formalización de modelos matemáticos aplicados a problemas reales, cubriendo formas cuadráticas, modelos de rango completo, correlación y modelos de rango no completo.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Morillos Valderrama, Santos Octavio
+            </span>
+          </div>
+        </div>
+      </div>
 
-<heading id="contenido">Contenido</heading>
+      <!-- EST314 — Aprendizaje No Supervisado -->
+      <div class="course" data-search="est314 aprendizaje no supervisado aleman gonzales leonid">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--rose)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="6" r="2.4"/>
+                  <circle cx="6" cy="18" r="2.4"/><circle cx="17" cy="16" r="2.4"/>
+                  <path d="M7.7 7.3 16.3 4.7M7.7 16.6 15.3 16.1M6 8.4V15.6"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST314.md</span>
+                <h3>Aprendizaje No Supervisado</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST314.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST314.md" title="Abrir archivo" aria-label="Abrir EST314.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-avanzado">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Avanzado
+            </span>
+            <span class="badge meta-plain">04 créditos</span>
+            <span class="badge meta-plain">Aula 201 · Lab 02</span>
+          </div>
+          <p class="card-desc">Preparación y preprocesamiento de datos, reducción de dimensionalidad, agrupamiento, reglas de asociación y aplicaciones avanzadas sobre conjuntos de datos.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Aleman Gonzales, Leonid
+            </span>
+          </div>
+        </div>
+      </div>
 
-<div class="pub">
-<heading>Unidad I: Formulación, planificación y organización del portafolio de proyectos TIC</heading>
-<p><b>Duración:</b> Semanas 1 al 9</p>
-<p><b>Logro de unidad:</b> Formula y organiza un proyecto TIC real mediante la identificación de problemas, definición de objetivos, planificación de entregables y construcción de un portafolio digital en GitHub y Notion.</p>
+      <!-- EST315 — Gestión de Proyectos TICs -->
+      <div class="course" data-search="est315 gestión proyectos tics melgarejo bolivar romel percy">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--teal)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <rect x="3" y="4" width="18" height="16" rx="2"/>
+                  <path d="M8 4v16M15 4v16"/>
+                  <rect x="4.5" y="7" width="2.2" height="3" rx="0.4" fill="currentColor" stroke="none"/>
+                  <rect x="9.5" y="7" width="2.2" height="6" rx="0.4" fill="currentColor" stroke="none"/>
+                  <rect x="16.5" y="7" width="2.2" height="4" rx="0.4" fill="currentColor" stroke="none"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST315.md</span>
+                <h3>Gestión de Proyectos TICs</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST315.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST315.md" title="Abrir archivo" aria-label="Abrir EST315.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-básico">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Básico
+            </span>
+            <span class="badge meta-plain">04 créditos</span>
+            <span class="badge meta-plain">Aula 101 · Lab EP</span>
+          </div>
+          <p class="card-desc">Fundamentos y práctica de gestión de proyectos de tecnologías de la información, desde la planificación hasta el seguimiento de entregables reales.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Melgarejo Bolivar, Romel Percy
+            </span>
+          </div>
+        </div>
+      </div>
 
-<ul>
-<li><b>Semana 1:</b> Presentación del curso. Enfoque por proyectos y portafolios. Líneas de trabajo: software, redes, estadística, ciencia de datos e investigación.</li>
-<li><b>Semana 2:</b> Gestión de proyectos TIC. Proyecto, programa y portafolio. Ciclo de vida del proyecto.</li>
-<li><b>Semana 3:</b> Identificación de problemas, necesidades y oportunidades en contextos reales.</li>
-<li><b>Semana 4:</b> Design Thinking e ideación de proyectos tecnológicos.</li>
-<li><b>Semana 5:</b> Formulación del proyecto: problema, objetivos, alcance, entregables e indicadores.</li>
-<li><b>Semana 6:</b> Acta de constitución del proyecto. Roles, responsabilidades e interesados.</li>
-<li><b>Semana 7:</b> Organización del portafolio en Notion: documentación, cronograma, bitácora y evidencias.</li>
-<li><b>Semana 8:</b> Organización del repositorio en GitHub: estructura, README, issues, milestones y control de versiones.</li>
-<li><b>Semana 9:</b> Sustentación parcial del proyecto: pitch, Project Charter, tablero de seguimiento y portafolio inicial.</li>
-</ul>
+      <!-- EST316 — Arquitectura de Redes y Protocolos -->
+      <div class="course" data-search="est316 arquitectura de redes y protocolos alejandro apaza tarqui">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--gold)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <circle cx="12" cy="4.5" r="2.2"/>
+                  <circle cx="5" cy="19" r="2.2"/>
+                  <circle cx="19" cy="19" r="2.2"/>
+                  <path d="M12 6.7V13M12 13 6.4 17.3M12 13l5.6 4.3"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST316.md</span>
+                <h3>Arquitectura de Redes y Protocolos</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST316.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST316.md" title="Abrir archivo" aria-label="Abrir EST316.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-básico">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Básico
+            </span>
+            <span class="badge meta-plain">03 créditos</span>
+            <span class="badge meta-plain">Aula 205-A</span>
+          </div>
+          <p class="card-desc">Organización de redes computacionales, protocolos de comunicación, conectividad, tecnologías modernas de transmisión y simulación de redes con Cisco Packet Tracer.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Alejandro Apaza Tarqui
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EST317 — Series de Tiempo -->
+      <div class="course" data-search="est317 series de tiempo cesar augusto lluen vallejos">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="card">
+          <div class="card-top">
+            <div class="card-head">
+              <div class="file-icon" style="--icon-color:var(--rose)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                  <path d="M4 19V5M4 19h16"/>
+                  <path d="M4 15l4-3 3.5 2.5L16 9l4 3"/>
+                </svg>
+              </div>
+              <div class="card-title">
+                <span class="code">EST317.md</span>
+                <h3>Series de Tiempo</h3>
+              </div>
+            </div>
+            <div class="card-actions">
+              <button class="icon-btn" data-copy="EST317.md" title="Copiar ruta" aria-label="Copiar ruta">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+              </button>
+              <a class="icon-btn" href="./EST317.md" title="Abrir archivo" aria-label="Abrir EST317.md">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14h8a1.5 1.5 0 0 0 1.5-1.5V10"/><path d="M9 2h5v5M14 2 7 9"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="meta-row">
+            <span class="badge nivel-avanzado">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2 4.5 5 .6-3.6 3.4.9 5-4.3-2.4L3.7 14.5l.9-5L1 6.1l5-.6L8 1z"/></svg>
+              Avanzado
+            </span>
+            <span class="badge meta-plain">04 créditos</span>
+            <span class="badge meta-plain">Aula 205 · Pab. antiguo</span>
+          </div>
+          <p class="card-desc">Modelos univariantes orientados a pronósticos: metodología Box-Jenkins (AR, MA, ARMA, ARIMA), modelos estacionales, heterocedásticos (ARCH/GARCH) y redes neuronales.</p>
+          <div class="card-people">
+            <span>
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="5" r="3"/><path d="M2.5 14c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/></svg>
+              Lluen Vallejos, César Augusto
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="empty-state" id="emptyState">// sin coincidencias — prueba otro código, curso o docente</p>
+  </main>
+
+  <footer>
+    <p>gitcs2026 · rama <span style="color:var(--gold)">main</span> · FINESI — UNAP</p>
+    <p><a href="./README.md">Ver README</a></p>
+  </footer>
+
 </div>
 
-<div class="pub">
-<heading>Unidad II: Ejecución, seguimiento, control y cierre de proyectos TIC</heading>
-<p><b>Duración:</b> Semanas 10 al 18</p>
-<p><b>Logro de unidad:</b> Ejecuta, monitorea y cierra un proyecto TIC aplicando metodologías ágiles, gestión visual, control de riesgos, indicadores de avance y presentación de resultados mediante un portafolio digital funcional.</p>
+<script>
+  // ---- Buscador en vivo ----
+  const input = document.getElementById('searchInput');
+  const nodes = Array.from(document.querySelectorAll('.timeline > .course'));
+  const empty = document.getElementById('emptyState');
 
-<ul>
-<li><b>Semana 10:</b> PMBOK aplicado a proyectos TIC. Enfoques predictivos, adaptativos e híbridos.</li>
-<li><b>Semana 11:</b> Scrum aplicado a proyectos de software, ciencia de datos, redes e investigación.</li>
-<li><b>Semana 12:</b> Kanban y gestión visual de tareas mediante GitHub Projects y Notion.</li>
-<li><b>Semana 13:</b> Gestión del cronograma, recursos, costos y responsabilidades del equipo.</li>
-<li><b>Semana 14:</b> Gestión de riesgos, calidad y cambios en proyectos TIC.</li>
-<li><b>Semana 15:</b> Métricas e indicadores: avance, cumplimiento, productividad, backlog, issues y evidencias.</li>
-<li><b>Semana 16:</b> Documentación técnica, informe del proyecto, manuales, reportes estadísticos o reportes de ciencia de datos.</li>
-<li><b>Semana 17:</b> Preparación de la presentación final: demo, dashboard, prototipo, análisis, informe o solución implementada.</li>
-<li><b>Semana 18:</b> Presentación final, cierre del proyecto, evaluación del portafolio y reflexión del aprendizaje.</li>
-</ul>
-</div>
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+    nodes.forEach(node => {
+      const haystack = (node.dataset.search + ' ' + node.textContent).toLowerCase();
+      const match = haystack.includes(q);
+      node.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+    empty.classList.toggle('show', visible === 0);
+  });
 
-<hr/>
+  // ---- Copiar ruta al portapapeles ----
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const path = btn.getAttribute('data-copy');
+      try {
+        await navigator.clipboard.writeText(path);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 1000);
+      } catch (e) { /* portapapeles no disponible */ }
+    });
+  });
 
-<heading id="metodologia">Metodología</heading>
-<div class="pub">
-<ul>
-<li>Aprendizaje basado en proyectos.</li>
-<li>Trabajo colaborativo por equipos.</li>
-<li>Uso obligatorio de GitHub, GitHub Projects y Notion.</li>
-<li>Aplicación de Scrum, Kanban, PMBOK y metodologías híbridas.</li>
-<li>Desarrollo de portafolios digitales de proyectos.</li>
-<li>Asesoría continua y revisión semanal de avances.</li>
-<li>Presentaciones parciales y finales tipo Demo Day.</li>
-</ul>
-</div>
+  // ---- Spotlight que sigue el cursor en cada tarjeta ----
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
 
-<hr/>
+  // ---- Revelado al hacer scroll ----
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
 
-<heading id="evaluacion">Evaluación</heading>
-<div class="pub">
-<ul>
-<li><b>Portafolio digital en Notion y GitHub:</b> 25%</li>
-<li><b>Entregable parcial de la Unidad I:</b> 25%</li>
-<li><b>Seguimiento, avances y gestión del proyecto:</b> 20%</li>
-<li><b>Producto final, informe y sustentación:</b> 25%</li>
-<li><b>Participación, autoevaluación y coevaluación:</b> 5%</li>
-</ul>
-</div>
+  document.querySelectorAll('.node-root, .course').forEach((el, i) => {
+    el.style.animationDelay = (i * 0.05) + 's';
+    io.observe(el);
+  });
 
-<hr/>
+  // ---- Contador dinámico ----
+  document.getElementById('statCount').textContent =
+    document.querySelectorAll('.course:not(.node-root)').length;
+</script>
 
-<heading id="entregables">Entregables</heading>
-<div class="pub">
-<ul>
-<li>Idea de proyecto TIC.</li>
-<li>Project Charter.</li>
-<li>Portafolio en Notion.</li>
-<li>Repositorio en GitHub.</li>
-<li>Tablero Kanban o Scrum.</li>
-<li>Bitácora de avances.</li>
-<li>Cronograma del proyecto.</li>
-<li>Matriz de riesgos.</li>
-<li>Informe técnico o científico.</li>
-<li>Producto funcional, prototipo, dashboard, análisis estadístico, modelo de datos o solución implementada.</li>
-<li>Presentación final del proyecto.</li>
-</ul>
-</div>
-
-<hr/>
-
-<heading id="recursos">Recursos</heading>
-<div class="pub">
-<ul>
-<li><a href="https://github.com/" target="_blank">GitHub</a></li>
-<li><a href="https://docs.github.com/en/issues/planning-and-tracking-with-projects" target="_blank">GitHub Projects</a></li>
-<li><a href="https://notion.so/" target="_blank">Notion</a></li>
-<li><a href="https://www.pmi.org/" target="_blank">Project Management Institute</a></li>
-<li><a href="https://www.scrum.org/" target="_blank">Scrum.org</a></li>
-<li><a href="https://trello.com/" target="_blank">Trello</a></li>
-<li><a href="https://www.atlassian.com/software/jira" target="_blank">Jira</a></li>
-<li><a href="https://colab.research.google.com/" target="_blank">Google Colab</a></li>
-</ul>
-</div>
-
-<hr/>
-
-<heading id="bibliografia">Bibliografía</heading>
-<div class="pub">
-<ul>
-<li>Project Management Institute. PMBOK® Guide – Seventh Edition. PMI, 2021.</li>
-<li>Schwaber, K. & Sutherland, J. The Scrum Guide. 2020.</li>
-<li>Schwalbe, K. Information Technology Project Management. Cengage Learning.</li>
-<li>Meredith, J. R. & Mantel, S. J. Project Management: A Managerial Approach.</li>
-<li>Pressman, R. Ingeniería del Software: Un enfoque práctico.</li>
-<li>Kerzner, H. Project Management: A Systems Approach to Planning, Scheduling, and Controlling.</li>
-<li>Wysocki, R. Effective Project Management: Traditional, Agile, Extreme, Hybrid.</li>
-</ul>
-</div>
-
-<hr/>
-
-<heading id="contacto">Contacto</heading>
-<p>permelro@unap.edu.pe</p>
-
-<hr/>
-
-<div id="footer">
-<heading>&copy; 2026 UNAP - FIEI - Ingeniería Estadística e Informática</heading>
-</div>
-
-</td>
-</tr>
-</table>
-<div style="height: 40px;"></div>
-</div>
-
-<script xml:space="preserve" language="JavaScript">hideallbibs();</script>
 </body>
 </html>
-```
